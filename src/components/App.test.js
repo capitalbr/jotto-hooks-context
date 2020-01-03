@@ -9,6 +9,6 @@ const setup = () => {
 
 test('renders without error', () => {
   const wrapper = setup();
-  const appComponent = wrapper.find("[data-test='component-app']");
+  const appComponent = findByTestAttr(wrapper, "component-app")
   expect(appComponent.length).toBe(1);
 });
