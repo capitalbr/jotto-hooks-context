@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TotalGuesses from "./totalGuesses";
+
 
 const GuessedWords = ({ guessedWords }) => {
   let contents;
@@ -45,7 +45,6 @@ const GuessedWords = ({ guessedWords }) => {
       data-test="component-guessed-words"
       className="guessed-words">
       {contents}
-      <TotalGuesses totalGuesses={guessedWords.length}/>
     </div>
   )
 };
