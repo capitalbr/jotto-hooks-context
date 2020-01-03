@@ -1,9 +1,14 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { findByTestAttr } from "../../test/testUtils";
+import { findByTestAttr } from "../../../test/testUtils";
 import Input from "./input";
 
-const setup = () => {
+const defaultProps = {
+  secretWord: "party"
+}
+
+const setup = (props) => {
+  const setupProps = { ...defaultProps, props }
   return shallow(<Input />);
 }
 
