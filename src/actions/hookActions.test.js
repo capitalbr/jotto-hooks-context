@@ -2,14 +2,14 @@ import moxios from "moxios";
 import { getSecretWord } from "./hookActions";
 
 
-describe("getSecretWord", () => {
+describe("moxios tests", () => {
   beforeEach(() => {
     moxios.install();
   });
   afterEach(() => {
     moxios.uninstall();
   })
-  test("calls setSecretWord with correct argument", async () => {
+  test("calls getSecretWord callback with axios respons", async () => {
     const secretWord = "party";
 
     moxios.wait(() => {

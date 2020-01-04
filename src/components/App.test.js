@@ -1,10 +1,16 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+// until enzyme github issue is fixed we need to use mount instead of shallow
+import { shallow, mount } from 'enzyme';
 import { findByTestAttr } from "../../test/testUtils";
 import App from './App';
+import hookActions from "../actions/hookActions";
+
+const mockGetSecretWord = jest.fn();
 
 const setup = () => {
-  return shallow(<App />);
+  mockGetSecretWord.mockClear();
+  hookActions.getSecretWord = mockGetSecretWord;  
+  return mount(<App />);
 };
 
 test('renders without error', () => {
@@ -12,3 +18,25 @@ test('renders without error', () => {
   const appComponent = findByTestAttr(wrapper, "component-app")
   expect(appComponent.length).toBe(1);
 });
+
+
+describe("getSecretWord", () => {
+  test("called on App mount", () => {
+    setup();
+    expect(mockGetSecretWord).toHaveBeenCalled();
+  });
+
+  test("not called on App updates", () => {
+    const wrapper = setup();
+    mockGetSecretWord.mockClear();
+    wrapper.setProps();
+    // wrapper.update() does not trigger useEffect
+    // will use alternative approach until github issue is resolved
+    
+    // alternative to using mockClear()
+    // expect(mockGetSecretWord.mock.calls.length).toBe(1);
+
+    expect(mockGetSecretWord).not.toHaveBeenCalled();
+  });
+});
+
