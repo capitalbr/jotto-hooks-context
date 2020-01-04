@@ -1,5 +1,6 @@
 import React from 'react';
 // until enzyme github issue is fixed we need to use mount instead of shallow
+// useEffect currently not called with shallow render
 import { shallow, mount } from 'enzyme';
 import { findByTestAttr } from "../../test/testUtils";
 import App from './App';
@@ -29,9 +30,11 @@ describe("getSecretWord", () => {
   test("not called on App updates", () => {
     const wrapper = setup();
     mockGetSecretWord.mockClear();
-    wrapper.setProps();
+    
     // wrapper.update() does not trigger useEffect
-    // will use alternative approach until github issue is resolved
+    // will use alternative approach 'setProps()' until github issue is resolved
+    wrapper.setProps();
+    
     
     // alternative to using mockClear()
     // expect(mockGetSecretWord.mock.calls.length).toBe(1);

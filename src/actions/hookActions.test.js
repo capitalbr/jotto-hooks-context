@@ -9,7 +9,7 @@ describe("moxios tests", () => {
   afterEach(() => {
     moxios.uninstall();
   })
-  test("calls getSecretWord callback with axios respons", async () => {
+  test("calls getSecretWord callback with axios response", async () => {
     const secretWord = "party";
 
     moxios.wait(() => {
