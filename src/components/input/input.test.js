@@ -23,16 +23,24 @@ test("prop-types does not give warning with expected props", () => {
 });
 
 describe("state controlled input field", () => {
-  test("currentGuess piece of state is updated onChange of input box", () => {
-    const mockSetCurrentGuess = jest.fn();
+    let mockSetCurrentGuess = jest.fn();
+    let wrapper;
+  beforeEach(() => {
+    mockSetCurrentGuess.mockClear();
     React.useState = jest.fn(() => ["", mockSetCurrentGuess] );
-    const wrapper = setup();
+    wrapper = setup();
+  });
+  test("currentGuess piece of state is updated onChange of input box", () => {
     const input = findByTestAttr(wrapper, "input-box");
-    const event = { 
-      target: { value: "party" }, 
-      currentTarget: { value: "party" } 
-    }
-    input.simulate("change", event );
+    const inputEvent = { target: { value: "party" } };
+    input.simulate("change", inputEvent)
     expect(mockSetCurrentGuess).toHaveBeenCalledWith("party");
+  });
+
+  test("currentGuess is cleared upon click of the submit button", () => {
+    const submitButton = wrapper.find("[data-test='submit-button']");
+    const submitEvent = { preventDefault: () => {} };
+    submitButton.simulate("click", submitEvent);
+    expect(mockSetCurrentGuess).toHaveBeenCalledWith("");
   });
 });
